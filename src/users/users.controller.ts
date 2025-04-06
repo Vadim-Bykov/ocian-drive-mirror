@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
@@ -7,12 +8,13 @@ import {
 } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserDto } from './dto/user.dto';
-import { UserService } from './users.service';
+import { UsersService } from './users.service';
 import { RoleEnum } from 'src/roles/role.enum';
 import { Roles } from 'src/roles/roles.decorator';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 const UserExample: UserDto = {
-  _id: '67efcab4b388d42bb5bf6286',
+  id: '67efcab4b388d42bb5bf6286',
   email: 'email@gmail.com',
   password: '123456',
   roles: [RoleEnum.User, RoleEnum.Admin],
@@ -23,7 +25,7 @@ const UserExample: UserDto = {
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UsersService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create user' })
@@ -38,6 +40,8 @@ export class UsersController {
     return user;
   }
 
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard)
   @Get()
   @ApiResponse({
     status: 200,

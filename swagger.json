@@ -24,7 +24,7 @@
                   "$ref": "#/components/schemas/UserDto"
                 },
                 "example": {
-                  "_id": "67efcab4b388d42bb5bf6286",
+                  "id": "67efcab4b388d42bb5bf6286",
                   "email": "email@gmail.com",
                   "password": "123456",
                   "roles": [
@@ -59,7 +59,7 @@
                 },
                 "example": [
                   {
-                    "_id": "67efcab4b388d42bb5bf6286",
+                    "id": "67efcab4b388d42bb5bf6286",
                     "email": "email@gmail.com",
                     "password": "123456",
                     "roles": [
@@ -74,6 +74,11 @@
             }
           }
         },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
         "summary": "Get all users",
         "tags": [
           "Users"
@@ -137,7 +142,7 @@
                 },
                 "example": [
                   {
-                    "_id": "67efcab4b388d42bb5bf6286",
+                    "id": "67efcab4b388d42bb5bf6286",
                     "email": "email@gmail.com",
                     "password": "123456",
                     "roles": [
@@ -263,6 +268,54 @@
           "Roles"
         ]
       }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Authorization"
+        ]
+      }
+    },
+    "/auth/registration": {
+      "post": {
+        "operationId": "AuthController_registration",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Authorization"
+        ]
+      }
     }
   },
   "info": {
@@ -274,6 +327,13 @@
   "tags": [],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "access-token": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
     "schemas": {
       "CreateUserDto": {
         "type": "object",
@@ -304,7 +364,7 @@
       "UserDto": {
         "type": "object",
         "properties": {
-          "_id": {
+          "id": {
             "type": "string",
             "uniqueItems": true
           },
@@ -333,7 +393,7 @@
           }
         },
         "required": [
-          "_id",
+          "id",
           "email",
           "password",
           "createdAt",

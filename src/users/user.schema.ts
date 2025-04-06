@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { RoleEnum } from 'src/roles/role.enum';
-// import { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
-// export type UsersDocument = HydratedDocument<User>;
+export type UserDocument = HydratedDocument<User>;
 
 @Schema({ collection: 'users', timestamps: true })
 export class User {
@@ -14,6 +14,12 @@ export class User {
 
   @Prop({ default: [RoleEnum.User] })
   roles: Array<RoleEnum>;
+
+  @Prop()
+  createdAt: string;
+
+  @Prop()
+  updatedAt: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

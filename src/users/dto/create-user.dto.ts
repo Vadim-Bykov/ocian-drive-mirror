@@ -1,8 +1,15 @@
-import { OmitType } from '@nestjs/swagger';
-import { UserDto } from './user.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail } from 'class-validator';
+import { RoleEnum } from 'src/roles/role.enum';
 
-export class CreateUserDto extends OmitType(UserDto, [
-  '_id',
-  'createdAt',
-  'updatedAt',
-]) {}
+export class CreateUserDto {
+  @IsEmail()
+  @ApiProperty({ required: true, uniqueItems: true })
+  email: string;
+
+  @ApiProperty({ required: true })
+  password: string;
+
+  @ApiProperty({ required: false, enum: RoleEnum, isArray: true })
+  roles: Array<RoleEnum>;
+}

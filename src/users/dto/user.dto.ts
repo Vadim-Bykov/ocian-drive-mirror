@@ -1,10 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail } from 'class-validator';
 import { RoleEnum } from 'src/roles/role.enum';
+import { UserDocument } from '../user.schema';
 
 export class UserDto {
   @ApiProperty({ required: true, uniqueItems: true })
-  _id: string;
+  id: string;
 
   @IsEmail()
   @ApiProperty({ required: true, uniqueItems: true })
@@ -22,3 +23,13 @@ export class UserDto {
   @ApiProperty()
   updatedAt: string;
 }
+
+export const getUserDto = ({
+  id,
+  email,
+  roles,
+  createdAt,
+  updatedAt,
+}: UserDocument): Omit<UserDto, 'password'> => {
+  return { id: id as string, email, roles, createdAt, updatedAt };
+};

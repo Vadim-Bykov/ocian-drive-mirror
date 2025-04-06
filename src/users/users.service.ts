@@ -6,13 +6,13 @@ import { User } from './user.schema';
 import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     @InjectModel(User.name) private userModel: Model<User>,
     private rolesService: RolesService,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
+  async createUser(createUserDto: CreateUserDto) {
     const createdUser = await this.userModel.create(createUserDto);
     return createdUser;
   }
@@ -22,10 +22,10 @@ export class UserService {
     return users;
   }
 
-  async getUserByEmail(email: string): Promise<User | null> {
+  async getUserByEmail(email: string) {
     return this.userModel.findOne({ email });
   }
-  async getUserById(id: string): Promise<User | null> {
+  async getUserById(id: string) {
     return this.userModel.findById(id).exec();
   }
 }
