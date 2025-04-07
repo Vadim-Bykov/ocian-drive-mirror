@@ -6,8 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { RolesModule } from './roles/roles.module';
 import { AuthModule } from './auth/auth.module';
-// import { APP_GUARD } from '@nestjs/core';
-// import { AuthGuard } from './auth/auth.guard';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { AuthModule } from './auth/auth.module';
   providers: [
     AppService,
     // To protect all the API endpoints
-    // { provide: APP_GUARD, useClass: AuthGuard }
+    { provide: APP_GUARD, useClass: AuthGuard },
   ],
 })
 export class AppModule {}

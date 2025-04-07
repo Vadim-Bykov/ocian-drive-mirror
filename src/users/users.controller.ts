@@ -1,14 +1,5 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
-import { RoleEnum } from 'src/roles/role.enum';
-import { Roles } from 'src/roles/roles.decorator';
-import { RolesGuard } from 'src/roles/roles.guard';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
 
@@ -16,9 +7,11 @@ export const UserExample: UserDto = {
   id: '67efcab4b388d42bb5bf6286',
   email: 'email@gmail.com',
   password: '123456',
-  roles: [RoleEnum.User, RoleEnum.Admin, RoleEnum.Manager],
+  // roles: [RoleEnum.User, RoleEnum.Admin, RoleEnum.Manager],
   createdAt: '2025-04-04T12:56:19.903Z',
   updatedAt: '2025-04-04T12:56:19.903Z',
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI',
 };
 
 @ApiTags('Users')
@@ -27,9 +20,8 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Get()
-  @ApiBearerAuth('access-token')
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles(RoleEnum.Admin, RoleEnum.Manager)
+  // @UseGuards(RolesGuard)
+  // @Roles(RoleEnum.Admin, RoleEnum.Manager)
   @ApiResponse({
     status: 200,
     type: UserDto,
@@ -43,8 +35,6 @@ export class UsersController {
   }
 
   @Get(':id')
-  @ApiBearerAuth('access-token')
-  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get one user by id' })
   @ApiResponse({
     status: 200,
@@ -58,8 +48,6 @@ export class UsersController {
   }
 
   @Get(':email')
-  @ApiBearerAuth('access-token')
-  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get one user by email' })
   @ApiResponse({
     status: 200,
@@ -68,8 +56,6 @@ export class UsersController {
   })
   @ApiOperation({ summary: 'Get one user' })
   async getUserByEmail(@Param('email') email: string) {
-    console.log({ email });
-
     const users = await this.userService.getUserByEmail(email);
     return users;
   }

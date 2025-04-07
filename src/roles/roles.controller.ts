@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOperation,
@@ -8,6 +8,8 @@ import {
 import { RolesService } from './roles.service';
 import { CreateRoleDto, RoleDto } from './role.dto';
 import { RoleEnum } from './role.enum';
+import { RolesGuard } from './roles.guard';
+import { Roles } from './roles.decorator';
 
 const RoleExample = {
   _id: '67efcab4b388d42bb5bf6286',
@@ -21,12 +23,14 @@ const RoleExample = {
 export class RolesController {
   constructor(private readonly rolesService: RolesService) {}
 
+  @Post()
+  @UseGuards(RolesGuard)
+  @Roles(RoleEnum.Admin)
   @ApiOperation({ summary: 'Create role' })
   @ApiCreatedResponse({
     type: RoleDto,
     example: RoleExample,
   })
-  @Post()
   async createRole(@Body() roleDto: CreateRoleDto) {
     const user = await this.rolesService.createRole(roleDto);
     return user;

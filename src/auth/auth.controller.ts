@@ -8,12 +8,14 @@ import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/users/dto/user.dto';
 import { UserExample } from 'src/users/users.controller';
+import { Public } from './auth.public.decorator';
 
 @ApiTags('Authorization')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('/login')
   @ApiAcceptedResponse({
     type: UserDto,
@@ -24,6 +26,7 @@ export class AuthController {
     return token;
   }
 
+  @Public()
   @Post('/registration')
   @ApiCreatedResponse({
     type: UserDto,

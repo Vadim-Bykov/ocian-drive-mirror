@@ -21,27 +21,23 @@
                     "id": "67efcab4b388d42bb5bf6286",
                     "email": "email@gmail.com",
                     "password": "123456",
-                    "roles": [
-                      "USER",
-                      "ADMIN",
-                      "MANAGER"
-                    ],
                     "createdAt": "2025-04-04T12:56:19.903Z",
-                    "updatedAt": "2025-04-04T12:56:19.903Z"
+                    "updatedAt": "2025-04-04T12:56:19.903Z",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI"
                   }
                 ]
               }
             }
           }
         },
+        "summary": "Get all users",
+        "tags": [
+          "Users"
+        ],
         "security": [
           {
             "access-token": []
           }
-        ],
-        "summary": "Get all users",
-        "tags": [
-          "Users"
         ]
       }
     },
@@ -73,14 +69,14 @@
             }
           }
         },
+        "summary": "Get one user by id",
+        "tags": [
+          "Users"
+        ],
         "security": [
           {
             "access-token": []
           }
-        ],
-        "summary": "Get one user by id",
-        "tags": [
-          "Users"
         ]
       }
     },
@@ -110,27 +106,23 @@
                     "id": "67efcab4b388d42bb5bf6286",
                     "email": "email@gmail.com",
                     "password": "123456",
-                    "roles": [
-                      "USER",
-                      "ADMIN",
-                      "MANAGER"
-                    ],
                     "createdAt": "2025-04-04T12:56:19.903Z",
-                    "updatedAt": "2025-04-04T12:56:19.903Z"
+                    "updatedAt": "2025-04-04T12:56:19.903Z",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI"
                   }
                 ]
               }
             }
           }
         },
+        "summary": "Get one user by email",
+        "tags": [
+          "Users"
+        ],
         "security": [
           {
             "access-token": []
           }
-        ],
-        "summary": "Get one user by email",
-        "tags": [
-          "Users"
         ]
       }
     },
@@ -281,13 +273,9 @@
                   "id": "67efcab4b388d42bb5bf6286",
                   "email": "email@gmail.com",
                   "password": "123456",
-                  "roles": [
-                    "USER",
-                    "ADMIN",
-                    "MANAGER"
-                  ],
                   "createdAt": "2025-04-04T12:56:19.903Z",
-                  "updatedAt": "2025-04-04T12:56:19.903Z"
+                  "updatedAt": "2025-04-04T12:56:19.903Z",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI"
                 }
               }
             }
@@ -329,13 +317,9 @@
                   "id": "67efcab4b388d42bb5bf6286",
                   "email": "email@gmail.com",
                   "password": "123456",
-                  "roles": [
-                    "USER",
-                    "ADMIN",
-                    "MANAGER"
-                  ],
                   "createdAt": "2025-04-04T12:56:19.903Z",
-                  "updatedAt": "2025-04-04T12:56:19.903Z"
+                  "updatedAt": "2025-04-04T12:56:19.903Z",
+                  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI"
                 }
               }
             }
@@ -383,21 +367,13 @@
           "password": {
             "type": "string"
           },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "USER",
-                "ADMIN",
-                "MANAGER"
-              ]
-            }
-          },
           "createdAt": {
             "type": "string"
           },
           "updatedAt": {
+            "type": "string"
+          },
+          "token": {
             "type": "string"
           }
         },

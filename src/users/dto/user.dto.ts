@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail } from 'class-validator';
-import { RoleEnum } from 'src/roles/role.enum';
+// import { RoleEnum } from 'src/roles/role.enum';
 import { UserDocument } from '../user.schema';
 
 export class UserDto {
@@ -14,22 +14,22 @@ export class UserDto {
   @ApiProperty({ required: true })
   password: string;
 
-  @ApiProperty({ required: false, enum: RoleEnum, isArray: true })
-  roles: Array<RoleEnum>;
+  // @ApiProperty({ required: false, enum: RoleEnum, isArray: true })
+  // roles: Array<RoleEnum>;
 
   @ApiProperty()
   createdAt: string;
 
   @ApiProperty()
   updatedAt: string;
+
+  @ApiProperty({ required: false })
+  token?: string;
 }
 
-export const getUserDto = ({
-  id,
-  email,
-  roles,
-  createdAt,
-  updatedAt,
-}: UserDocument): Omit<UserDto, 'password'> => {
-  return { id: id as string, email, roles, createdAt, updatedAt };
+export const getUserDto = (
+  { id, email, createdAt, updatedAt }: UserDocument,
+  token?: string,
+): Omit<UserDto, 'password'> => {
+  return { id: id as string, email, createdAt, updatedAt, token };
 };

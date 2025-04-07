@@ -1,8 +1,8 @@
 import {
+  BadRequestException,
   HttpException,
   HttpStatus,
   Injectable,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -22,28 +22,32 @@ export class AuthService {
     const user = await this.validateToken(userDto);
     const token = this.generateToken(user);
 
-    return { ...getUserDto(user), token };
+    return getUserDto(user, token);
   }
 
   async registration({ email, password, roles }: CreateUserDto) {
-    const candidate = await this.usersService.getUserByEmail(email);
-    if (candidate) {
-      throw new HttpException(
-        `Email ${email} already exists in db`,
-        HttpStatus.BAD_REQUEST,
-      );
+    try {
+      const candidate = await this.usersService.getUserByEmail(email);
+      if (candidate) {
+        throw new HttpException(
+          `Email ${email} already exists in db`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      const hashPassword = await bcrypt.hash(password, 3);
+      const user = await this.usersService.createUser({
+        email,
+        roles,
+        password: hashPassword,
+      });
+
+      const token = this.generateToken(user);
+
+      return getUserDto(user, token);
+    } catch (error) {
+      throw new BadRequestException(error);
     }
-
-    const hashPassword = await bcrypt.hash(password, 3);
-    const user = await this.usersService.createUser({
-      email,
-      roles,
-      password: hashPassword,
-    });
-
-    const token = this.generateToken(user);
-
-    return { ...getUserDto(user), token };
   }
 
   private generateToken({ email, _id, roles }: UserDocument) {
@@ -52,15 +56,19 @@ export class AuthService {
   }
 
   private async validateToken({ email, password }: CreateUserDto) {
-    const user = await this.usersService.getUserByEmail(email);
+    try {
+      const user = await this.usersService.getUserByEmail(email);
 
-    const passwordsEqual =
-      user && (await bcrypt.compare(password, user?.password));
+      const passwordsEqual =
+        user && (await bcrypt.compare(password, user?.password));
 
-    if (passwordsEqual && user) {
-      return user;
+      if (passwordsEqual && user) {
+        return user;
+      }
+
+      throw new BadRequestException({ message: 'Incorrect email or password' });
+    } catch (error) {
+      throw new BadRequestException(error);
     }
-
-    throw new UnauthorizedException({ message: 'Incorrect email or password' });
   }
 }

@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import * as fs from 'fs';
 import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AuthGuard } from './auth/auth.guard';
 
 async function bootstrap() {
   try {
