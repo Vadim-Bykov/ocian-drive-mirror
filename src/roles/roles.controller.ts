@@ -1,15 +1,24 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  ParseEnumPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { RolesService } from './roles.service';
 import { CreateRoleDto, RoleDto } from './role.dto';
 import { RoleEnum } from './role.enum';
-import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
+import { RolesGuard } from './roles.guard';
+import { RolesService } from './roles.service';
 
 const RoleExample: RoleDto = {
   id: '67efcab4b388d42bb5bf6286',
@@ -36,15 +45,26 @@ export class RolesController {
     return user;
   }
 
-  @Get(':role')
-  @ApiOperation({ summary: 'Get role' })
+  @ApiOperation({
+    summary: 'Get role',
+    parameters: [{ name: 'role', in: 'path' }],
+  })
   @ApiResponse({
     status: 200,
     type: RoleDto,
     example: RoleExample,
   })
-  async getRoleByValue(@Param('role') value: RoleEnum) {
-    const role = await this.rolesService.getRoleByValue(value);
+  @Get(':role')
+  async getRoleByValue(
+    @Param(
+      'role',
+      new ParseEnumPipe(RoleEnum, {
+        errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE,
+      }),
+    )
+    roleName: RoleEnum,
+  ) {
+    const role = await this.rolesService.getRoleByValue(roleName);
     return role;
   }
 

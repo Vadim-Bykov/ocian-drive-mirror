@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto } from './dto/user.dto';
 import { UsersService } from './users.service';
@@ -41,10 +41,13 @@ export class UsersController {
     type: UserDto,
     isArray: true,
   })
-  @ApiOperation({ summary: 'Get one users' })
   async getUserById(@Param('id') id: string) {
-    const users = await this.userService.getUserById(id);
-    return users;
+    try {
+      const users = await this.userService.getUserById(id);
+      return users;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
   @Get(':email')

@@ -8,7 +8,11 @@ export class UserDto {
   id: string;
 
   @IsEmail()
-  @ApiProperty({ required: true, uniqueItems: true })
+  @ApiProperty({
+    required: true,
+    uniqueItems: true,
+    example: 'test-user@mail.com',
+  })
   email: string;
 
   @ApiProperty({ required: true })

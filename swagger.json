@@ -362,7 +362,8 @@
           },
           "email": {
             "type": "string",
-            "uniqueItems": true
+            "uniqueItems": true,
+            "example": "test-user@mail.com"
           },
           "password": {
             "type": "string"

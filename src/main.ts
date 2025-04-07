@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import * as fs from 'fs';
 import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   try {
@@ -36,9 +37,9 @@ async function bootstrap() {
     }
 
     fs.writeFileSync('./swagger.json', JSON.stringify(document, null, 2));
-    console.log('✅ Swagger JSON обновлен!');
-
     SwaggerModule.setup('api', app, document);
+
+    app.useGlobalPipes(new ValidationPipe());
 
     await app.listen(process.env.PORT ?? 3000);
 
