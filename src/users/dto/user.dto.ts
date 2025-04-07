@@ -29,11 +29,14 @@ export class UserDto {
 
   @ApiProperty({ required: false })
   token?: string;
+
+  @ApiProperty({ required: false })
+  image?: string;
 }
 
 export const getUserDto = (
-  { id, email, createdAt, updatedAt }: UserDocument,
+  { id, email, createdAt, updatedAt, image }: UserDocument,
   token?: string,
 ): Omit<UserDto, 'password'> => {
-  return { id: id as string, email, createdAt, updatedAt, token };
+  return { id: id as string, email, createdAt, updatedAt, token, image };
 };

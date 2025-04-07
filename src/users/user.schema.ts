@@ -26,6 +26,9 @@ export class User {
   @Prop({ default: [RoleEnum.User] })
   roles: Array<RoleEnum>;
 
+  @Prop({ required: false })
+  image: string;
+
   @Prop()
   createdAt: string;
 

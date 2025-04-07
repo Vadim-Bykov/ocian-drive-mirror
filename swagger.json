@@ -376,6 +376,9 @@
           },
           "token": {
             "type": "string"
+          },
+          "image": {
+            "type": "string"
           }
         },
         "required": [
@@ -447,6 +450,9 @@
             "uniqueItems": true
           },
           "password": {
+            "type": "string"
+          },
+          "image": {
             "type": "string"
           }
         },

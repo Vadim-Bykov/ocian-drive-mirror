@@ -13,5 +13,8 @@ export class CreateUserDto {
   @Length(4, 12)
   password: string;
 
+  @ApiProperty({ required: false })
+  image?: string;
+
   roles: Array<RoleEnum>;
 }

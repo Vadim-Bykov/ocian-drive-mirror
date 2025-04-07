@@ -59,7 +59,11 @@ export class UsersController {
   })
   @ApiOperation({ summary: 'Get one user' })
   async getUserByEmail(@Param('email') email: string) {
-    const users = await this.userService.getUserByEmail(email);
-    return users;
+    const user = await this.userService.getUserByEmail(email);
+
+    if (!user) {
+      throw new BadRequestException(`User with email: ${email} was not found`);
+    }
+    return user;
   }
 }

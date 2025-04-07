@@ -8,6 +8,9 @@ import { RolesModule } from './roles/roles.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './auth/auth.guard';
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { resolve } from 'path';
 
 @Module({
   imports: [
@@ -16,6 +19,10 @@ import { AuthGuard } from './auth/auth.guard';
     UsersModule,
     RolesModule,
     AuthModule,
+    FilesModule,
+    ServeStaticModule.forRoot({
+      rootPath: resolve('static'),
+    }),
   ],
   controllers: [AppController],
   providers: [

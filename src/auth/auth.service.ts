@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { FilesService } from 'src/files/files.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { getUserDto } from 'src/users/dto/user.dto';
 import { UserDocument } from 'src/users/user.schema';
@@ -16,6 +17,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private filesService: FilesService,
   ) {}
 
   async login(userDto: CreateUserDto) {
@@ -25,7 +27,10 @@ export class AuthService {
     return getUserDto(user, token);
   }
 
-  async registration({ email, password, roles }: CreateUserDto) {
+  async registration(
+    { email, password, roles }: CreateUserDto,
+    image: Express.Multer.File,
+  ) {
     try {
       const candidate = await this.usersService.getUserByEmail(email);
       if (candidate) {
@@ -34,12 +39,17 @@ export class AuthService {
           HttpStatus.BAD_REQUEST,
         );
       }
+      // console.log({ image });
+
+      const filePath = this.filesService.crateFile(image);
+      console.log({ filePath });
 
       const hashPassword = await bcrypt.hash(password, 3);
       const user = await this.usersService.createUser({
         email,
         roles,
         password: hashPassword,
+        image: filePath,
       });
 
       const token = this.generateToken(user);
