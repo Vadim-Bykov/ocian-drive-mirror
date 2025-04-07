@@ -1,23 +1,22 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiCreatedResponse,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserDto } from './dto/user.dto';
-import { UsersService } from './users.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 import { RoleEnum } from 'src/roles/role.enum';
 import { Roles } from 'src/roles/roles.decorator';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/roles/roles.guard';
+import { UserDto } from './dto/user.dto';
+import { UsersService } from './users.service';
 
-const UserExample: UserDto = {
+export const UserExample: UserDto = {
   id: '67efcab4b388d42bb5bf6286',
   email: 'email@gmail.com',
   password: '123456',
-  roles: [RoleEnum.User, RoleEnum.Admin],
+  roles: [RoleEnum.User, RoleEnum.Admin, RoleEnum.Manager],
   createdAt: '2025-04-04T12:56:19.903Z',
   updatedAt: '2025-04-04T12:56:19.903Z',
 };
@@ -27,22 +26,10 @@ const UserExample: UserDto = {
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Post()
-  @ApiOperation({ summary: 'Create user' })
-  @ApiCreatedResponse({
-    type: UserDto,
-    example: UserExample,
-    description: 'User has been created',
-  })
-  @Roles(RoleEnum.User)
-  async createUser(@Body() userDto: CreateUserDto) {
-    const user = await this.userService.createUser(userDto);
-    return user;
-  }
-
-  @ApiBearerAuth('access-token')
-  @UseGuards(AuthGuard)
   @Get()
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(RoleEnum.Admin, RoleEnum.Manager)
   @ApiResponse({
     status: 200,
     type: UserDto,
@@ -56,6 +43,8 @@ export class UsersController {
   }
 
   @Get(':id')
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get one user by id' })
   @ApiResponse({
     status: 200,
@@ -69,6 +58,8 @@ export class UsersController {
   }
 
   @Get(':email')
+  @ApiBearerAuth('access-token')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Get one user by email' })
   @ApiResponse({
     status: 200,

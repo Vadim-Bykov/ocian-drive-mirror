@@ -2,47 +2,6 @@
   "openapi": "3.0.0",
   "paths": {
     "/users": {
-      "post": {
-        "operationId": "UsersController_createUser",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateUserDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "User has been created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                },
-                "example": {
-                  "id": "67efcab4b388d42bb5bf6286",
-                  "email": "email@gmail.com",
-                  "password": "123456",
-                  "roles": [
-                    "USER",
-                    "ADMIN"
-                  ],
-                  "createdAt": "2025-04-04T12:56:19.903Z",
-                  "updatedAt": "2025-04-04T12:56:19.903Z"
-                }
-              }
-            }
-          }
-        },
-        "summary": "Create user",
-        "tags": [
-          "Users"
-        ]
-      },
       "get": {
         "operationId": "UsersController_getUsers",
         "parameters": [],
@@ -64,7 +23,8 @@
                     "password": "123456",
                     "roles": [
                       "USER",
-                      "ADMIN"
+                      "ADMIN",
+                      "MANAGER"
                     ],
                     "createdAt": "2025-04-04T12:56:19.903Z",
                     "updatedAt": "2025-04-04T12:56:19.903Z"
@@ -113,6 +73,11 @@
             }
           }
         },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
         "summary": "Get one user by id",
         "tags": [
           "Users"
@@ -147,7 +112,8 @@
                     "password": "123456",
                     "roles": [
                       "USER",
-                      "ADMIN"
+                      "ADMIN",
+                      "MANAGER"
                     ],
                     "createdAt": "2025-04-04T12:56:19.903Z",
                     "updatedAt": "2025-04-04T12:56:19.903Z"
@@ -157,6 +123,11 @@
             }
           }
         },
+        "security": [
+          {
+            "access-token": []
+          }
+        ],
         "summary": "Get one user by email",
         "tags": [
           "Users"
@@ -198,6 +169,11 @@
         "summary": "Create role",
         "tags": [
           "Roles"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
         ]
       },
       "get": {
@@ -229,6 +205,11 @@
         "summary": "Get all roles",
         "tags": [
           "Roles"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
         ]
       }
     },
@@ -266,6 +247,11 @@
         "summary": "Get role",
         "tags": [
           "Roles"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
         ]
       }
     },
@@ -284,12 +270,36 @@
           }
         },
         "responses": {
-          "201": {
-            "description": ""
+          "202": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                },
+                "example": {
+                  "id": "67efcab4b388d42bb5bf6286",
+                  "email": "email@gmail.com",
+                  "password": "123456",
+                  "roles": [
+                    "USER",
+                    "ADMIN",
+                    "MANAGER"
+                  ],
+                  "createdAt": "2025-04-04T12:56:19.903Z",
+                  "updatedAt": "2025-04-04T12:56:19.903Z"
+                }
+              }
+            }
           }
         },
         "tags": [
           "Authorization"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
         ]
       }
     },
@@ -309,11 +319,35 @@
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDto"
+                },
+                "example": {
+                  "id": "67efcab4b388d42bb5bf6286",
+                  "email": "email@gmail.com",
+                  "password": "123456",
+                  "roles": [
+                    "USER",
+                    "ADMIN",
+                    "MANAGER"
+                  ],
+                  "createdAt": "2025-04-04T12:56:19.903Z",
+                  "updatedAt": "2025-04-04T12:56:19.903Z"
+                }
+              }
+            }
           }
         },
         "tags": [
           "Authorization"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
         ]
       }
     }
@@ -335,32 +369,6 @@
       }
     },
     "schemas": {
-      "CreateUserDto": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "uniqueItems": true
-          },
-          "password": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "USER",
-                "ADMIN"
-              ]
-            }
-          }
-        },
-        "required": [
-          "email",
-          "password"
-        ]
-      },
       "UserDto": {
         "type": "object",
         "properties": {
@@ -381,7 +389,8 @@
               "type": "string",
               "enum": [
                 "USER",
-                "ADMIN"
+                "ADMIN",
+                "MANAGER"
               ]
             }
           },
@@ -407,7 +416,8 @@
             "type": "string",
             "enum": [
               "USER",
-              "ADMIN"
+              "ADMIN",
+              "MANAGER"
             ]
           }
         },
@@ -426,13 +436,30 @@
             "type": "string",
             "enum": [
               "USER",
-              "ADMIN"
+              "ADMIN",
+              "MANAGER"
             ]
           }
         },
         "required": [
           "_id",
           "value"
+        ]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
         ]
       }
     }

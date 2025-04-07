@@ -10,6 +10,5 @@ export class CreateUserDto {
   @ApiProperty({ required: true })
   password: string;
 
-  @ApiProperty({ required: false, enum: RoleEnum, isArray: true })
   roles: Array<RoleEnum>;
 }
