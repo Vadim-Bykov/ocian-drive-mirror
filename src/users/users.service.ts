@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
-import { getUserDto } from './dto/user.dto';
 import { User } from './user.schema';
 
 @Injectable()
@@ -21,7 +20,7 @@ export class UsersService {
   async getAllUsers() {
     try {
       const users = await this.userModel.find().exec();
-      return users.map((user) => getUserDto(user));
+      return users;
     } catch (error) {
       throw new BadRequestException(error);
     }
@@ -48,7 +47,7 @@ export class UsersService {
       if (!user) {
         throw new BadRequestException(`User with id: ${id} was not found`);
       }
-      return getUserDto(user);
+      return user;
     } catch (error) {
       throw new BadRequestException(error);
     }

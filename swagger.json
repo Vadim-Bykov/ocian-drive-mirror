@@ -149,8 +149,8 @@
                   "$ref": "#/components/schemas/RoleDto"
                 },
                 "example": {
-                  "_id": "67efcab4b388d42bb5bf6286",
-                  "value": "ADMIN",
+                  "id": "67efcab4b388d42bb5bf6286",
+                  "value": "USER",
                   "createdAt": "2025-04-04T12:56:19.903Z",
                   "updatedAt": "2025-04-04T12:56:19.903Z"
                 }
@@ -184,8 +184,8 @@
                 },
                 "example": [
                   {
-                    "_id": "67efcab4b388d42bb5bf6286",
-                    "value": "ADMIN",
+                    "id": "67efcab4b388d42bb5bf6286",
+                    "value": "USER",
                     "createdAt": "2025-04-04T12:56:19.903Z",
                     "updatedAt": "2025-04-04T12:56:19.903Z"
                   }
@@ -227,8 +227,8 @@
                   "$ref": "#/components/schemas/RoleDto"
                 },
                 "example": {
-                  "_id": "67efcab4b388d42bb5bf6286",
-                  "value": "ADMIN",
+                  "id": "67efcab4b388d42bb5bf6286",
+                  "value": "USER",
                   "createdAt": "2025-04-04T12:56:19.903Z",
                   "updatedAt": "2025-04-04T12:56:19.903Z"
                 }
@@ -395,17 +395,25 @@
               "ADMIN",
               "MANAGER"
             ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
           }
         },
         "required": [
-          "value"
+          "value",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "RoleDto": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "object",
+          "id": {
+            "type": "string",
             "uniqueItems": true
           },
           "value": {
@@ -415,11 +423,19 @@
               "ADMIN",
               "MANAGER"
             ]
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
           }
         },
         "required": [
-          "_id",
-          "value"
+          "id",
+          "value",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "CreateUserDto": {

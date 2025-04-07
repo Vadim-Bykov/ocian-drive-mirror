@@ -1,13 +1,18 @@
 import { ApiProperty, OmitType } from '@nestjs/swagger';
 import { RoleEnum } from './role.enum';
-import { ObjectId } from 'mongoose';
 
 export class RoleDto {
   @ApiProperty({ required: true, uniqueItems: true })
-  _id: ObjectId;
+  id: string;
 
   @ApiProperty({ required: true, enum: RoleEnum })
   value: RoleEnum;
+
+  @ApiProperty()
+  createdAt: string;
+
+  @ApiProperty()
+  updatedAt: string;
 }
 
-export class CreateRoleDto extends OmitType(RoleDto, ['_id']) {}
+export class CreateRoleDto extends OmitType(RoleDto, ['id']) {}

@@ -11,9 +11,9 @@ import { RoleEnum } from './role.enum';
 import { RolesGuard } from './roles.guard';
 import { Roles } from './roles.decorator';
 
-const RoleExample = {
-  _id: '67efcab4b388d42bb5bf6286',
-  value: 'ADMIN',
+const RoleExample: RoleDto = {
+  id: '67efcab4b388d42bb5bf6286',
+  value: RoleEnum.User,
   createdAt: '2025-04-04T12:56:19.903Z',
   updatedAt: '2025-04-04T12:56:19.903Z',
 };
