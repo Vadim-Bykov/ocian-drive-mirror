@@ -3,33 +3,26 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { FilesService } from 'src/files/files.service';
+import { TokenService } from 'src/token/token.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { getUserDto } from 'src/users/dto/user.dto';
-import { UserDocument } from 'src/users/user.schema';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService,
     private filesService: FilesService,
+    private tokenService: TokenService,
   ) {}
-
-  async login(userDto: CreateUserDto) {
-    const user = await this.validateToken(userDto);
-    const token = this.generateToken(user);
-
-    return getUserDto(user, token);
-  }
 
   async registration(
     { email, password, roles }: CreateUserDto,
-    image: Express.Multer.File,
+    image?: Express.Multer.File,
   ) {
     try {
       const candidate = await this.usersService.getUserByEmail(email);
@@ -39,10 +32,8 @@ export class AuthService {
           HttpStatus.BAD_REQUEST,
         );
       }
-      // console.log({ image });
 
-      const filePath = this.filesService.crateFile(image);
-      console.log({ filePath });
+      const filePath = image ? this.filesService.crateFile(image) : undefined;
 
       const hashPassword = await bcrypt.hash(password, 3);
       const user = await this.usersService.createUser({
@@ -52,20 +43,53 @@ export class AuthService {
         image: filePath,
       });
 
-      const token = this.generateToken(user);
+      const payload = { email, id: user._id, roles };
+      const tokens = await this.tokenService.createTokens(payload);
 
-      return getUserDto(user, token);
+      return getUserDto(user, tokens);
     } catch (error) {
-      throw new BadRequestException(error);
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new BadRequestException(error);
+      }
     }
   }
 
-  private generateToken({ email, _id, roles }: UserDocument) {
-    const payload = { email, id: _id, roles };
-    return this.jwtService.sign(payload);
+  async login(userDto: CreateUserDto) {
+    try {
+      const user = await this.validateUserCredentials(userDto);
+      const payload = { email: user.email, id: user._id, roles: user.roles };
+      const tokens = await this.tokenService.createTokens(payload);
+
+      return getUserDto(user, tokens);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new BadRequestException(error);
+      }
+    }
   }
 
-  private async validateToken({ email, password }: CreateUserDto) {
+  async logout(userId: string) {
+    try {
+      const user = await this.usersService.getUserById(userId);
+      if (user) {
+        await this.tokenService.removeRefreshToken(userId);
+      } else {
+        throw new UnauthorizedException('User was not found');
+      }
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new BadRequestException(error);
+      }
+    }
+  }
+
+  private async validateUserCredentials({ email, password }: CreateUserDto) {
     try {
       const user = await this.usersService.getUserByEmail(email);
 
@@ -78,7 +102,11 @@ export class AuthService {
 
       throw new BadRequestException({ message: 'Incorrect email or password' });
     } catch (error) {
-      throw new BadRequestException(error);
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new BadRequestException(error);
+      }
     }
   }
 }

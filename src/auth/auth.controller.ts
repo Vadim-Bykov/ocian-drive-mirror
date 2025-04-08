@@ -1,6 +1,9 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Delete,
+  Param,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -22,8 +25,27 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post('/registration')
   @Public()
+  @ApiCreatedResponse({
+    type: UserDto,
+    example: UserExample,
+  })
+  @UseInterceptors(FileInterceptor('image'))
+  async registration(
+    @Body() userDto: CreateUserDto,
+    @UploadedFile() image?: Express.Multer.File,
+  ) {
+    try {
+      const user = await this.authService.registration(userDto, image);
+      return user;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
   @Post('/login')
+  @Public()
   @ApiAcceptedResponse({
     type: UserDto,
     example: UserExample,
@@ -33,17 +55,8 @@ export class AuthController {
     return token;
   }
 
-  @Public()
-  @Post('/registration')
-  @ApiCreatedResponse({
-    type: UserDto,
-    example: UserExample,
-  })
-  @UseInterceptors(FileInterceptor('image'))
-  registration(
-    @Body() userDtoDto: CreateUserDto,
-    @UploadedFile() image: Express.Multer.File,
-  ) {
-    return this.authService.registration(userDtoDto, image);
+  @Delete('/logout/:userId')
+  async logout(@Param('userId') userId: string) {
+    await this.authService.logout(userId);
   }
 }

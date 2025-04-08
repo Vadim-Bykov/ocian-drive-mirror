@@ -11,6 +11,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { resolve } from 'path';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -22,7 +23,11 @@ import { resolve } from 'path';
     FilesModule,
     ServeStaticModule.forRoot({
       rootPath: resolve('static'),
+      serveStaticOptions: {
+        fallthrough: false,
+      },
     }),
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [

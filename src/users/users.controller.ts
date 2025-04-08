@@ -10,8 +10,14 @@ export const UserExample: UserDto = {
   // roles: [RoleEnum.User, RoleEnum.Admin, RoleEnum.Manager],
   createdAt: '2025-04-04T12:56:19.903Z',
   updatedAt: '2025-04-04T12:56:19.903Z',
-  token:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI',
+  tokens: {
+    accessToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI',
+    refreshToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InN0cmluZyIsImlkIjoiNjdmMzhkMmNmYmM3MjBiZjM1MDIyYzdlIiwicm9sZXMiOlsiVVNFUiJdLCJpYXQiOjE3NDQwMTUyMzcsImV4cCI6MTc0NDEwMTYzN30.eEV89O1ZRMlGEYE7CH4JGhTpR1FCMzfGrFvXl9xKVeI',
+  },
+  isActivated: true,
+  image: '/16326f51-2236-4eb8-8a85-9d2c6b7f0dbd.png',
 };
 
 @ApiTags('Users')

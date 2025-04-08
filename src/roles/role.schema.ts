@@ -6,7 +6,6 @@ import { HydratedDocument } from 'mongoose';
 export type RoleDocument = HydratedDocument<Role>;
 
 @Schema({
-  collection: 'roles',
   timestamps: true,
   toJSON: {
     virtuals: true,

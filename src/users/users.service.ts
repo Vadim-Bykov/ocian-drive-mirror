@@ -28,7 +28,7 @@ export class UsersService {
 
   async getUserByEmail(email: string) {
     try {
-      const user = await this.userModel.findOne({ email });
+      const user = await this.userModel.findOne({ email }).exec();
 
       return user;
     } catch (error) {
