@@ -1,0 +1,6 @@
+[build]
+command = "yarn build"
+
+[env]
+YARN_PRODUCTION = "false"
+BUN_INSTALL = "false"
