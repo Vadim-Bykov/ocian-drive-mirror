@@ -9,7 +9,6 @@ async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule);
 
-    // Swagger конфигурация
     const config = new DocumentBuilder()
       .setTitle('API Documentation')
       .setDescription('Generated Swagger JSON')
