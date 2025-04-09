@@ -36,7 +36,10 @@ async function bootstrap() {
       }
     }
 
-    fs.writeFileSync('./swagger.json', JSON.stringify(document, null, 2));
+    if (process.env.NODE_ENV !== 'production') {
+      fs.writeFileSync('./swagger.json', JSON.stringify(document, null, 2));
+    }
+
     SwaggerModule.setup('api', app, document);
 
     app.useGlobalPipes(new ValidationPipe());
