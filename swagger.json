@@ -411,6 +411,268 @@
           }
         ]
       }
+    },
+    "/posts": {
+      "post": {
+        "operationId": "PostsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                },
+                "example": {
+                  "userId": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+                  "createdAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                  "updatedAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                  "id": "67f7b99a38583ddb4c752de2"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Posts"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "get": {
+        "operationId": "PostsController_getPaginated",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of posts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "example": [
+                          {
+                            "userId": 1,
+                            "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                            "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+                            "createdAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                            "updatedAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                            "id": "67f7b99a38583ddb4c752de2"
+                          }
+                        ]
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 45
+                    },
+                    "page": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "size": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "totalPages": {
+                      "type": "number",
+                      "example": 5
+                    },
+                    "nextPage": {
+                      "type": "number",
+                      "nullable": true,
+                      "example": 2
+                    }
+                  }
+                },
+                "example": {
+                  "items": [
+                    {
+                      "userId": 1,
+                      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                      "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+                      "createdAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                      "updatedAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                      "id": "67f7b99a38583ddb4c752de2"
+                    }
+                  ],
+                  "total": 45,
+                  "page": 1,
+                  "size": 10,
+                  "totalPages": 5,
+                  "nextPage": 2
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Posts"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "operationId": "PostsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostDto"
+                },
+                "example": {
+                  "userId": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+                  "createdAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                  "updatedAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                  "id": "67f7b99a38583ddb4c752de2"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Posts"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "PostsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "example": {
+                  "userId": 1,
+                  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+                  "createdAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                  "updatedAt": "Thu Apr 10 2025 14:29:14 GMT+0200 (Central European Summer Time)",
+                  "id": "67f7b99a38583ddb4c752de2"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Posts"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "PostsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Posts"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
     }
   },
   "info": {
@@ -551,6 +813,70 @@
         "required": [
           "token"
         ]
+      },
+      "CreatePostDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "title",
+          "body"
+        ]
+      },
+      "PostDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "userId",
+          "title",
+          "body",
+          "id",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "UpdatePostDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "number"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        }
       }
     }
   }

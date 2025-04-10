@@ -12,6 +12,7 @@ import { FilesModule } from './files/files.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { resolve } from 'path';
 import { TokenModule } from './token/token.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { TokenModule } from './token/token.module';
       },
     }),
     TokenModule,
+    PostsModule,
   ],
   controllers: [AppController],
   providers: [

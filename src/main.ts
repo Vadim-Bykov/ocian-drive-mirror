@@ -42,7 +42,13 @@ async function bootstrap() {
 
     SwaggerModule.setup('api', app, document);
 
-    app.useGlobalPipes(new ValidationPipe());
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true, // преобразует типы (например, string в number)
+        whitelist: true, // игнорирует лишние поля
+        forbidNonWhitelisted: true, // ругается на лишние поля
+      }),
+    );
 
     await app.listen(process.env.PORT ?? 3000);
 
