@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import 'dotenv/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import './instrument';
 
 async function bootstrap() {
   try {

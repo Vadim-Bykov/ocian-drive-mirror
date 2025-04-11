@@ -1,6 +1,25 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/debug-sentry": {
+      "get": {
+        "operationId": "AppController_getError",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ],
+        "security": [
+          {
+            "access-token": []
+          }
+        ]
+      }
+    },
     "/users": {
       "get": {
         "operationId": "UsersController_getUsers",

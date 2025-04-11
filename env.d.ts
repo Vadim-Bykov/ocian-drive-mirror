@@ -4,5 +4,6 @@ declare namespace NodeJS {
     PORT?: string;
     NODE_ENV: 'development' | 'production' | 'staging';
     PRIVATE_KEY: string;
+    SENTRY_DSN: string;
   }
 }
