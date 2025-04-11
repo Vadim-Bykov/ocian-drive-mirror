@@ -15,7 +15,5 @@ export async function paginate<T>(
     model.countDocuments(filter).exec(),
   ]);
 
-  console.log({ items, total, page, size });
-
   return new PaginationResult<T>({ items, total, page, size });
 }

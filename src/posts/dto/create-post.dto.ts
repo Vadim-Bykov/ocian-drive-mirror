@@ -42,8 +42,10 @@ export class JsonPlaceholderPostDto {
 export class PostDto extends CreatePostDto {
   @ApiProperty({ required: true })
   id: string;
+
   @ApiProperty({ required: true })
   createdAt: string;
+
   @ApiProperty({ required: true })
   updatedAt: string;
 }

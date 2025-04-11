@@ -46,7 +46,7 @@ async function bootstrap() {
       new ValidationPipe({
         transform: true, // преобразует типы (например, string в number)
         whitelist: true, // игнорирует лишние поля
-        forbidNonWhitelisted: true, // ругается на лишние поля
+        // forbidNonWhitelisted: true, // ругается на лишние поля
       }),
     );
 

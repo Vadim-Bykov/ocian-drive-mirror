@@ -52,12 +52,8 @@ export class PostsService {
   }
 
   async findOne(id: string) {
+    // Check if we request a post from json placeholder (id === integer for placeholder, id === string (ObjectId) for mongo db)
     const isInteger = Number.isInteger(+id);
-    console.log({
-      isInteger,
-      id,
-      '+id': +id,
-    });
 
     try {
       if (isInteger) {
